@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Appointment</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>Appointment Booking</h1>
+      <form method="POST" action="/logout" style="text-align:right">
+        <button class="secondary" type="submit">Log out</button>
+      </form>
+    </div>
+
+    <div id="clientError" class="error"></div>
+
+    <% if (errors && errors.length > 0) { %>
+      <div class="error-box">
+        <% errors.forEach((msg) => { %>
+          <div class="error"><%= msg %></div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <form id="bookingForm" method="POST" action="/booking" onsubmit="return validateBooking(event)" novalidate>
+      <label for="clientName">Client name</label>
+      <input id="clientName" name="clientName" type="text" value="<%= values.clientName %>" required maxlength="80" />
+
+      <label for="clientEmail">Client email</label>
+      <input id="clientEmail" name="clientEmail" type="email" value="<%= values.clientEmail %>" required maxlength="200" />
+
+      <label for="serviceType">Service type</label>
+      <select id="serviceType" name="serviceType" required>
+        <option value="">-- Select --</option>
+        <% SERVICE_TYPES.forEach((s) => { %>
+          <option value="<%= s %>" <%= values.serviceType === s ? 'selected' : '' %>><%= s %></option>
+        <% }) %>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" value="<%= values.date %>" required />
+        </div>
+        <div>
+          <label for="timeSlot">Time slot</label>
+          <select id="timeSlot" name="timeSlot" required>
+            <option value="">-- Select --</option>
+            <% TIME_SLOTS.forEach((t) => { %>
+              <option value="<%= t %>" <%= values.timeSlot === t ? 'selected' : '' %>><%= t %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="4" maxlength="500"><%= values.notes %></textarea>
+
+      <button type="submit">Book</button>
+    </form>
+
+    <p>
+      Teaching notes:
+      Client-side validation helps UX, but server-side validation is authoritative.
+      Notes are free-text: trim/limit on the server and escape on display.
+    </p>
+  </div>
+
+  <script src="/validation.js"></script>
+</body>
+</html>

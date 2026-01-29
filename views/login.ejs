@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Login</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Staff Login</h1>
+
+    <div id="clientError" class="error"></div>
+
+    <% if (error) { %>
+      <div class="error-box">
+        <div class="error"><%= error %></div>
+      </div>
+    <% } %>
+
+    <form id="loginForm" method="POST" action="/login"  novalidate>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" value="<%= values.email %>" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" />
+
+      <button type="submit">Log in</button>
+    </form>
+
+    <p>
+      This starter uses a simple cookie flag after login.
+      It is intentionally minimal so you can discuss security tradeoffs live.
+    </p>
+  </div>
+
+  <script src="/validation.js"></script>
+</body>
+</html>
